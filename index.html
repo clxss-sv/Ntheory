@@ -901,8 +901,8 @@
     if (remaining > 0 && land > 0) {
       var piePct = (remaining / renderTotal) * 100;
       var displayPct = (remaining / land) * 100;
-      gradientStops.push("var(--paper-raised) " + cumulativePercent + "% 100%");
-      legEl.innerHTML += '<div style="display:flex; align-items:center;"><span class="dot" style="background:var(--paper-raised); border:1px solid var(--line);"></span>พื้นที่อยู่อาศัย (คน + สัตว์) (' + fmt(displayPct, 1) + '%)</div>';
+      gradientStops.push("#970000 " + cumulativePercent + "% 100%");
+      legEl.innerHTML += '<div style="display:flex; align-items:center;"><span class="dot" style="background:#970000;"></span>พื้นที่อยู่อาศัย (คน + สัตว์) (' + fmt(displayPct, 1) + '%)</div>';
     } else if (remaining < 0) {
       legEl.innerHTML += '<div style="display:flex; align-items:center; color:var(--warn); font-weight:600;"><span class="dot" style="background:var(--warn)"></span>พื้นที่เกินงบที่ดิน (' + fmt(Math.abs((remaining/land)*100), 1) + '%)</div>';
     }
@@ -927,7 +927,7 @@
     if (remaining > 0) {
        var pct = land > 0 ? (remaining / land) * 100 : 0;
        var tr = document.createElement("tr");
-       tr.innerHTML = '<td><span class="dot" style="background:var(--paper-raised); border:1px solid var(--line);"></span>พื้นที่อยู่อาศัย (คน + สัตว์)</td>' +
+       tr.innerHTML = '<td><span class="dot" style="background:#970000;"></span>พื้นที่อยู่อาศัย (คน + สัตว์)</td>' +
         '<td>' + fmt(remaining) + ' ตร.ม.</td><td>' + fmt(pct, 1) + '%</td>';
        tbody.appendChild(tr);
     }
@@ -974,5 +974,3 @@
 
 </body>
 </html>
-
-```
