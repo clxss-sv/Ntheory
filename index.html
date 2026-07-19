@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เครื่องคำนวณการแบ่งพื้นที่เกษตรทฤษฎีใหม่ · 1 ไร่</title>
+<meta name="description" content="เครื่องมือคำนวณพื้นที่นาข้าว แปลงผัก บ่อน้ำ และพื้นที่เศรษฐกิจ สำหรับเกษตรทฤษฎีใหม่ในที่ดินจำกัด 1 ไร่">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@500;600;700&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="brand-stripe" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="eyebrow">แบบจำลองทางคณิตศาสตร์ &middot; เกษตรทฤษฎีใหม่ขั้นต้น</p>
+    <h1>เครื่องคำนวณการแบ่งพื้นที่เกษตรทฤษฎีใหม่ สำหรับที่ดิน 1 ไร่</h1>
+    <p class="lede">คำนวณพื้นที่ 4 ส่วน — นาข้าว แปลงผัก บ่อน้ำ และพื้นที่เศรษฐกิจ — จากจำนวนสมาชิกในครัวเรือนและปริมาณการบริโภคจริง เพื่อช่วยวางแผนแบ่งสัดส่วนที่ดินจำกัดขนาด 1 ไร่ (1,600 ตารางเมตร) กรอกตัวเลขด้านล่างแล้วผลลัพธ์จะคำนวณให้ทันที</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="สารบัญ">
+  <ul>
+    <li><a href="#concept">แนวคิด</a></li>
+    <li><a href="#calc-rice">นาข้าว</a></li>
+    <li><a href="#calc-veg">แปลงผัก</a></li>
+    <li><a href="#calc-water">บ่อน้ำ</a></li>
+    <li><a href="#calc-sell">พื้นที่เศรษฐกิจ</a></li>
+    <li><a href="#calc-house">ที่อยู่อาศัย</a></li>
+    <li><a href="#summary">สรุปผล</a></li>
+  </ul>
+</nav>
+
+<main id="app">
+
+  <section id="concept">
+    <div class="wrap">
+      <p class="section-kicker">01 &middot; แนวคิด</p>
+      <h2>หลักการแบ่งพื้นที่</h2>
+      <div class="concept-grid">
+        <div class="concept-text">
+          <p><strong>เกษตรทฤษฎีใหม่</strong>ตามแนวพระราชดำริ แบ่งที่ดินออกเป็น 4 ส่วนตามสัดส่วนต้นแบบ <strong>30:30:30:10</strong> คือ แหล่งน้ำ นาข้าว พืชผัก/ไม้ผลผสมผสาน และที่อยู่อาศัย/โรงเรือนเลี้ยงสัตว์ ซึ่งเดิมออกแบบไว้สำหรับที่ดินขนาดใหญ่ประมาณ 15 ไร่</p>
+          <p>เครื่องมือนี้ปรับแนวคิดดังกล่าวให้ใช้ได้กับที่ดินจำกัดเพียง <strong>1 ไร่ (1,600 ตารางเมตร)</strong> โดยไม่ยึดสัดส่วนคงที่ แต่คำนวณพื้นที่แต่ละส่วนจาก<strong>ปริมาณการบริโภคจริงของครัวเรือน</strong> ผ่านชุดสมการ 4 ชุด แล้วนำผลรวมไปเทียบกับพื้นที่ที่มีอยู่จริงในส่วนสรุปผลด้านล่าง</p>
+          <div class="assumptions">
+            <h3>สมมติฐานพื้นฐานของแบบจำลอง</h3>
+            <ul>
+              <li>1 ปี = <code>365.25</code> วัน (คิดรวมปีอธิกสุรทิน)</li>
+              <li>1 ทัพพีข้าวสุก ≈ <code>0.055</code> กก.</li>
+              <li>ผลผลิตข้าวเปลือกแปรเป็นข้าวสุกได้ประมาณ <code>60%</code></li>
+              <li>ผู้บริโภค 1 คน กินข้าวประมาณ <code>4–6</code> ทัพพีต่อวัน (เกษตรทฤษฎีใหม่) เนื่องจากคนในปัจจุบันส่วนใหญ่ทำงานออฟฟิศ นั่งอยู่กับที่ ไม่ได้ใช้พลังงานเยอะเหมือนคนในอดีต</li>
+              <li>กรมอนามัยแนะนำว่าสำหรับคนทั่วไป (วัยทำงาน) การทานข้าวกลุ่มแป้งเพียงมื้อละ 1-2 ทัพพีก็เพียงพอแล้ว หากทานมากกว่านี้อาจทำให้เกิดภาวะพลังงานส่วนเกินและเกิดการสะสมเป็นไขมันได้ง่าย</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <svg class="plot-diagram" viewBox="0 0 480 380" role="img" aria-label="แผนผังสัดส่วนที่ดินต้นแบบ 30:30:30:10">
+            <defs>
+              <pattern id="pWater" width="22" height="12" patternUnits="userSpaceOnUse">
+                <path d="M0 6 Q5.5 0 11 6 T22 6" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.6"/>
+              </pattern>
+              <pattern id="pRice" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="14" stroke="#ffffff" stroke-opacity="0.32" stroke-width="2"/>
+              </pattern>
+              <pattern id="pCrop" width="18" height="18" patternUnits="userSpaceOnUse">
+                <circle cx="5" cy="5" r="1.8" fill="#ffffff" fill-opacity="0.38"/>
+                <circle cx="13" cy="13" r="1.8" fill="#ffffff" fill-opacity="0.38"/>
+              </pattern>
+              <pattern id="pSoil" width="13" height="13" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="0" x2="13" y2="0" stroke="#ffffff" stroke-opacity="0.32" stroke-width="1.5"/>
+                <line x1="0" y1="0" x2="0" y2="13" stroke="#ffffff" stroke-opacity="0.32" stroke-width="1.5"/>
+              </pattern>
+            </defs>
+
+            <rect x="8" y="8" width="464" height="105" fill="var(--water)"/>
+            <rect x="8" y="8" width="464" height="105" fill="url(#pWater)"/>
+
+            <rect x="8" y="113" width="464" height="105" fill="var(--rice)"/>
+            <rect x="8" y="113" width="464" height="105" fill="url(#pRice)"/>
+
+            <rect x="8" y="218" width="464" height="105" fill="var(--crop)"/>
+            <rect x="8" y="218" width="464" height="105" fill="url(#pCrop)"/>
+
+            <rect x="8" y="323" width="464" height="37" fill="var(--soil)"/>
+            <rect x="8" y="323" width="464" height="37" fill="url(#pSoil)"/>
+
+            <rect x="8" y="8" width="464" height="352" rx="10" fill="none" stroke="var(--ink)" stroke-width="2"/>
+
+            <text x="28" y="64">แหล่งน้ำ &middot; 30%</text>
+            <text x="28" y="169">นาข้าว &middot; 30%</text>
+            <text x="28" y="274">พืชผัก/ไม้ผลผสมผสาน &middot; 30%</text>
+            <text x="28" y="345" font-size="15">ที่อยู่อาศัย/โรงเรือน &middot; 10%</text>
+          </svg>
+          <p class="plot-caption">สัดส่วนต้นแบบ 30:30:30:10 — ใช้เป็นกรอบอ้างอิง ส่วนพื้นที่จริงคำนวณจากแบบจำลองด้านล่าง</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calc-rice">
+    <div class="wrap">
+      <p class="section-kicker">02 &middot; แบบคำนวณ</p>
+      <h2>พื้นที่เพาะปลูก</h2>
+      <p class="section-intro">กรอกข้อมูลในแต่ละส่วนด้านล่าง ผลลัพธ์และสรุปรวมจะปรับตามทันทีที่มีการเปลี่ยนค่า</p>
+
+      <div class="calc-card calc-rice">
+        <div class="card-head">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 21V9"/><path d="M12 9c0-4 3-7 7-7 0 4-3 7-7 7Z"/><path d="M12 13c0-3.5-2.5-6-6-6 0 3.5 2.5 6 6 6Z"/></svg>
+          </span>
+          <div class="card-titles">
+            <h3>1. นาข้าว</h3>
+            <p>พื้นที่ปลูกข้าวเปลือกให้พอกินตลอดปี ตามจำนวนคนในครัวเรือน</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-grid">
+            <div class="field">
+              <label for="rice-yield">ผลผลิตข้าวเปลือก <span class="unit">(กก./ตร.ม.)</span></label>
+              <input type="number" id="rice-yield" min="0.01" step="0.01">
+            </div>
+            <div class="field">
+              <label for="rice-people">จำนวนคนที่บริโภคข้าว <span class="unit">(คน)</span></label>
+              <input type="number" id="rice-people" min="0" step="1">
+            </div>
+            <div class="field">
+              <label for="rice-k">ส่วนเพิ่มสำรอง k <span class="unit">(%)</span></label>
+              <input type="number" id="rice-k" step="0.01">
+            </div>
+            <div class="field">
+              <label for="rice-fish">จำนวนปลานิลในการบริโภคข้าว <span class="unit">(ตัว)</span></label>
+              <input type="number" id="rice-fish" min="0" step="1">
+            </div>
+            <div class="field">
+              <label for="rice-meat">จำนวนไก่เนื้อในการบริโภคข้าว <span class="unit">(ตัว)</span></label>
+              <input type="number" id="rice-meat" min="0" step="1">
+            </div>
+            <div class="field">
+              <label for="rice-egg">จำนวนไก่ไข่ในการบริโภคข้าว <span class="unit">(ตัว)</span></label>
+              <input type="number" id="rice-egg" min="0" step="1">
+            </div>
+          </div>
+          <div class="result-box">
+            <p class="result-label">พื้นที่นาข้าวที่ต้องการ</p>
+            <div class="result-figure"><span id="rice-out">—</span><span class="result-unit">ตร.ม.</span></div>
+            <p class="result-note" id="rice-out-note" hidden>ระบุผลผลิตข้าวเปลือกมากกว่า 0 เพื่อคำนวณ</p>
+          </div>
+        </div>
+        <div class="wrap" style="padding: 0 24px 22px;">
+          <details class="formula-details">
+            <summary>ดูสูตรคำนวณและหมายเหตุ</summary>
+            <div class="formula-block">
+              <span class="formula-line">R_yield = ผลผลิตข้าวเปลือก &times; 0.60</span>
+              <span class="formula-line">ความต้องการต่ำสุด = 365.25 &times; คน &times; (0.055 &times; 4)
+ความต้องการสูงสุด = 365.25 &times; คน &times; (0.055 &times; 6)</span>
+              <span class="formula-line">พื้นที่ (ต่ำสุด–สูงสุด) = (1 + k/100) &times; ความต้องการ / R_yield
+พื้นที่ที่แสดงผล = ค่าเฉลี่ยของพื้นที่ต่ำสุดและสูงสุด</span>
+              <p>ช่องจำนวนปลานิล/ไก่เนื้อ/ไก่ไข่ เป็นส่วนหนึ่งของแบบจำลองต้นทาง แต่ในสูตรคำนวณพื้นที่นาข้าวชุดนี้ ค่าดังกล่าวยังไม่ถูกนำมารวมในผลลัพธ์สุดท้าย (คูณด้วย 0 ในสมการต้นฉบับ) จึงยังไม่ส่งผลต่อตัวเลขด้านบน</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calc-veg">
+    <div class="wrap">
+      <div class="calc-card calc-veg">
+        <div class="card-head">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-8 0-14 5-14 13 0 1 0 2 .3 3C15 19 20 12 20 4Z"/><path d="M6.3 20C7 13 12 9 18 6"/></svg>
+          </span>
+          <div class="card-titles">
+            <h3>2. แปลงผักสวนครัว</h3>
+            <p>พื้นที่ปลูกผักตามชนิดและปริมาณที่บริโภคต่อคนต่อวัน</p>
+          </div>
+        </div>
+        <div class="card-body" style="grid-template-columns: 1fr;">
+          <div>
+            <div class="field-grid" style="margin-bottom:20px;">
+              <div class="field">
+                <label for="veg-people">จำนวนคนที่บริโภคผัก <span class="unit">(คน)</span></label>
+                <input type="number" id="veg-people" min="0" step="1">
+              </div>
+              <div class="field">
+                <label for="veg-fish">จำนวนปลานิลในการบริโภคผัก <span class="unit">(ตัว)</span></label>
+                <input type="number" id="veg-fish" min="0" step="1">
+              </div>
+            </div>
+            <div class="field-grid" id="veg-fields"></div>
+          </div>
+        </div>
+        <div class="wrap" style="padding: 0 24px 22px;">
+          <div class="result-box" style="max-width:340px;">
+            <p class="result-label">พื้นที่แปลงผักที่ต้องการ (เฉลี่ย)</p>
+            <div class="result-figure"><span id="veg-out-avg">—</span><span class="result-unit">ตร.ม.</span></div>
+          </div>
+          <details class="formula-details">
+            <summary>ดูสูตรคำนวณและหมายเหตุ</summary>
+            <div class="formula-block">
+              <span class="formula-line">สำหรับผักแต่ละชนิด: เทอม = ปริมาณที่กิน/คน/วัน &divide; อัตราผลผลิตต่อตร.ม.</span>
+              <span class="formula-line">ผลรวมเทอม = ผลรวมของผักทั้ง 13 ชนิด</span>
+              <span class="formula-line">พื้นที่ผัก = จำนวนคน &times; 365.25 &times; ผลรวมเทอม</span>
+              <p>ช่องจำนวนปลานิลเป็นส่วนหนึ่งของแบบจำลองต้นทาง แต่ยังไม่ถูกนำมารวมในผลลัพธ์สุดท้ายเช่นเดียวกับส่วนนาข้าว</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calc-water">
+    <div class="wrap">
+      <div class="calc-card calc-water">
+        <div class="card-head">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>
+          </span>
+          <div class="card-titles">
+            <h3>3. บ่อน้ำ</h3>
+            <p>พื้นที่ผิวบ่อกักเก็บน้ำให้เพียงพอต่อนาข้าวและแปลงผักตลอดปี</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-grid">
+            <div class="field">
+              <label for="water-k">ส่วนเพิ่มสำรองน้ำ k <span class="unit">(%)</span></label>
+              <input type="number" id="water-k" min="0" step="0.01">
+            </div>
+          </div>
+          <div class="result-box">
+            <p class="result-label">พื้นที่บ่อน้ำที่ต้องการ</p>
+            <div class="result-figure"><span id="water-out">—</span><span class="result-unit">ตร.ม.</span></div>
+            <p class="result-sub">ปริมาณน้ำที่ต้องใช้โดยประมาณ: <span id="water-out-need">—</span> ลบ.ม./ปี</p>
+          </div>
+        </div>
+        <div class="wrap" style="padding: 0 24px 22px;">
+          <details class="formula-details">
+            <summary>ดูสูตรคำนวณและหมายเหตุ</summary>
+            <div class="formula-block">
+              <span class="formula-line">ปริมาณน้ำที่ต้องใช้ (W_need) = 365.25 &times; ผลรวมของ(น้ำที่ผักแต่ละชนิดต้องการ &times; วัน)</span>
+              <span class="formula-line">พื้นที่บ่อน้ำ = (2/3 &times; W_need &times; (1 + k/100)) / 1.70</span>
+              <p>ตัวหาร 1.70 แทนความลึกเฉลี่ยของบ่อ (เมตร) ที่ใช้แปลงปริมาตรน้ำที่ต้องการเป็นพื้นที่ผิวบ่อ ตามแบบจำลอง Python</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calc-sell">
+    <div class="wrap">
+      <div class="calc-card calc-sell">
+        <div class="card-head">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg>
+          </span>
+          <div class="card-titles">
+            <h3>4. พื้นที่เศรษฐกิจ</h3>
+            <p>พื้นที่ปลูกพืชขาย (มะนาว พริกขี้หนูสวน ชะอม) เทียบกับผลผลิตปศุสัตว์และประมงที่เลี้ยง</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-grid">
+            <div class="field">
+              <label for="sell-egg">จำนวนไก่ไข่ <span class="unit">(ตัว)</span></label>
+              <input type="number" id="sell-egg" min="0" step="1">
+            </div>
+            <div class="field">
+              <label for="sell-meat">จำนวนไก่เนื้อ <span class="unit">(ตัว)</span></label>
+              <input type="number" id="sell-meat" min="0" step="1">
+            </div>
+            <div class="field">
+              <label for="sell-fish">จำนวนปลา <span class="unit">(ตัว)</span></label>
+              <input type="number" id="sell-fish" min="0" step="0.01">
+            </div>
+          </div>
+          <div class="result-box">
+            <p class="result-label">พื้นที่เพาะปลูกพืชเศรษฐกิจที่ต้องการ</p>
+            <div class="result-figure"><span id="sell-out">—</span><span class="result-unit">ตร.ม.</span></div>
+          </div>
+        </div>
+        <div class="wrap" style="padding: 0 24px 22px;">
+          <details class="formula-details">
+            <summary>ดูสูตรคำนวณและหมายเหตุ</summary>
+            <div class="formula-block">
+              <span class="formula-line">มูลค่าปศุสัตว์/ประมง = (ไก่ไข่&times;0.120&times;27.5) + (ไก่เนื้อ&times;0.090&times;21.5) + (ปลา&times;0.090&times;25)</span>
+              <span class="formula-line">พื้นที่ = มูลค่าปศุสัตว์/ประมง &times; 365.25 &times; พื้นที่อ้างอิงพืช 3 ชนิด / ราคาอ้างอิงพืช 3 ชนิด</span>
+              <p>พื้นที่และราคาอ้างอิง คำนวณจากมะนาว พริกขี้หนูสวน และชะอม ตามค่าคงที่ในแบบจำลอง</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calc-house">
+    <div class="wrap">
+      <div class="calc-card calc-house">
+        <div class="card-head">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+          </span>
+          <div class="card-titles">
+            <h3>5. ที่อยู่อาศัย</h3>
+            <p>พื้นที่บ้านพักและโรงเรือนเลี้ยงสัตว์ กำหนดค่าเริ่มต้นไว้ที่ 150 ตารางเมตร ปรับได้ตามจริง</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-grid">
+            <div class="field">
+              <label for="house-area">พื้นที่อยู่อาศัย <span class="unit">(ตร.ม.)</span></label>
+              <input type="number" id="house-area" min="0" step="0.01">
+            </div>
+          </div>
+          <div class="result-box">
+            <p class="result-label">พื้นที่อยู่อาศัยที่กำหนด</p>
+            <div class="result-figure"><span id="house-out">—</span><span class="result-unit">ตร.ม.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="summary">
+    <div class="wrap">
+      <p class="section-kicker">03 &middot; สรุปผล</p>
+      <h2>ภาพรวมการแบ่งพื้นที่</h2>
+      <p class="section-intro">สัดส่วนพื้นที่ทั้ง 4 ส่วน — บ่อน้ำ นาข้าว พืชผสม (บริโภค + ขาย) และที่อยู่อาศัย — โดยคิดเป็น 100% จากผลรวมของทั้ง 4 ส่วนนี้เท่านั้น</p>
+
+      <div class="summary-controls">
+        <button class="btn btn-ghost" id="reset-btn" type="button" style="margin-left:auto;">ล้างค่ากลับค่าเริ่มต้น</button>
+      </div>
+
+      <div class="chart-layout">
+        <div class="pie-chart" id="pie-chart" role="img" aria-label="กราฟวงกลมแสดงสัดส่วนพื้นที่"></div>
+        <div class="legend-column" id="chart-legend">
+          <!-- ไดนามิกสร้างจาก JavaScript -->
+        </div>
+      </div>
+
+      <table class="summary-table">
+        <thead>
+          <tr><th>ส่วนพื้นที่</th><th>พื้นที่ที่ต้องการ</th><th>สัดส่วน (%)</th></tr>
+        </thead>
+        <tbody id="sum-table-body"></tbody>
+        <tfoot>
+          <tr class="total-row"><td>รวมพื้นที่ 4 ส่วน</td><td id="sum-total">—</td><td>100%</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>ตัวเลขทั้งหมดเป็นผลจากแบบจำลองทางคณิตศาสตร์เพื่อการศึกษา ใช้สำหรับทำความเข้าใจหลักการแบ่งพื้นที่และประเมินคร่าว ๆ เท่านั้น ไม่ใช่คำแนะนำทางการเกษตรอย่างเป็นทางการ ผลลัพธ์ที่แม่นยำขึ้นอยู่กับสภาพดิน น้ำ และภูมิอากาศของแต่ละพื้นที่จริง</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
